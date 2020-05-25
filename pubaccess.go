@@ -1,4 +1,4 @@
-package skynet
+package pubaccess
 
 import (
 	"bytes"
@@ -14,7 +14,7 @@ import (
 
 type (
 	UploadReponse struct {
-		Skylink string `json:"skylink"`
+		Publink string `json:"publink"`
 	}
 
 	UploadOptions struct {
@@ -32,15 +32,15 @@ type (
 
 var (
 	DefaultUploadOptions = UploadOptions{
-		portalUrl:                    "https://siasky.net",
-		portalUploadPath:             "/skynet/skyfile",
+		portalUrl:                    "https://scp.techandsupply.ca/",
+		portalUploadPath:             "/pubaccess/pubfile",
 		portalFileFieldname:          "file",
 		portalDirectoryFileFieldname: "files[]",
 		customFilename:               "",
 	}
 
 	DefaultDownloadOptions = DownloadOptions{
-		portalUrl: "https://siasky.net",
+		portalUrl: "https://scp.techandsupply.ca/",
 	}
 )
 
@@ -84,7 +84,7 @@ func UploadFile(path string, opts UploadOptions) (string, error) {
 		return "", err
 	}
 
-	// upload the file to skynet
+	// upload the file to public portals
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -105,7 +105,7 @@ func UploadFile(path string, opts UploadOptions) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("sia://%s", apiResponse.Skylink), nil
+	return fmt.Sprintf("scp://%s", apiResponse.Publink), nil
 }
 
 func UploadDirectory(path string, opts UploadOptions) (string, error) {
@@ -162,7 +162,7 @@ func UploadDirectory(path string, opts UploadOptions) (string, error) {
 		return "", err
 	}
 
-	// upload the file to skynet
+	// upload the file to public portals
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -183,11 +183,11 @@ func UploadDirectory(path string, opts UploadOptions) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("sia://%s", apiResponse.Skylink), nil
+	return fmt.Sprintf("scp://%s", apiResponse.Publink), nil
 }
 
-func DownloadFile(path, skylink string, opts DownloadOptions) error {
-	resp, err := http.Get(fmt.Sprintf("%s/%s", strings.TrimRight(opts.portalUrl, "/"), strings.TrimPrefix(skylink, "sia://")))
+func DownloadFile(path, publink string, opts DownloadOptions) error {
+	resp, err := http.Get(fmt.Sprintf("%s/%s", strings.TrimRight(opts.portalUrl, "/"), strings.TrimPrefix(publink, "scp://")))
 	if err != nil {
 		return err
 	}
