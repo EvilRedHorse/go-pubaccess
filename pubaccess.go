@@ -32,7 +32,7 @@ type (
 
 var (
 	DefaultUploadOptions = UploadOptions{
-		portalUrl:                    "https://scp.techandsupply.ca/",
+		portalUrl:                    "https://scp.techandsupply.ca",
 		portalUploadPath:             "/pubaccess/pubfile",
 		portalFileFieldname:          "file",
 		portalDirectoryFileFieldname: "files[]",
@@ -40,7 +40,7 @@ var (
 	}
 
 	DefaultDownloadOptions = DownloadOptions{
-		portalUrl: "https://scp.techandsupply.ca/",
+		portalUrl: "https://scp.techandsupply.ca",
 	}
 )
 
